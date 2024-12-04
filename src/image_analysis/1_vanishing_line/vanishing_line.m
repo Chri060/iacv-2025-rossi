@@ -42,6 +42,17 @@ lm4 = points_to_line(1019, 153, 834, 278);
 pm = lines_intersection(lm1, lm4);
 
 
+%% Height vanishing point (for later use) 
+% Consider four points for the height
+% They are found using corners_finder.m and imported manually (and
+% modified)
+lh1 = points_to_line(1131, 455, 1020, 153); % right
+lh4 = points_to_line(108, 22, 37, 466); % left
+
+% Find the intersection point of the two lines, that is the vanishing point
+ph = lines_intersection(lh1, lh4);
+
+
 %% Find the line at the infinity 
 % We can find the parameters of the line at the infinity by simply finding 
 % the line that pass through the vanishing points
@@ -73,4 +84,4 @@ hold off
 
 %% Save the line at the infinity in a file
 % The file is called vanishing.mat
-save('iacv_homework\variables\vanishing.mat', 'l_infty');
+save('iacv_homework\variables\vanishing.mat', 'l_infty', 'pl', 'pm', 'ph');

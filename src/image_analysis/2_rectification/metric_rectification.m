@@ -75,3 +75,6 @@ hold off;
 
 %% Save the rectified image
 imwrite(metric_image, 'iacv_homework\images\metric.jpg');
+
+% Save the metric homography matrix
+save('iacv_homework\variables\metric.mat', 'H');

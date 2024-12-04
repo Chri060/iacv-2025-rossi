@@ -42,3 +42,6 @@ imshow(rectified_img);
 %% Save the rectified image
 % The image is called rectified.jpg
 imwrite(rectified_img, 'iacv_homework\images\rectified.jpg');
+
+% Save the homography matrix
+save('iacv_homework\variables\rectification.mat', 'H');
