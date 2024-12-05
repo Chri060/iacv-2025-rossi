@@ -30,7 +30,9 @@ H = [1,0,0;
 
 % Apply the image to the whole image
 tform = projective2d(H');
-rectified_img = imwarp(img, tform, 'OutputView', imref2d(9 * size(img)));
+
+rectified_img = imwarp(img, tform, 'OutputView', imref2d(9 * size(img)), 'FillValues', 255);
+rectified_img = imresize(rectified_img, [size(img, 1), size(img, 2)]);
 
 
 %% Image plotting

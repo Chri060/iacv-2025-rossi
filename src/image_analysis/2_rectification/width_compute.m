@@ -15,29 +15,32 @@ img = imread('iacv_homework\images\metric.jpg');
 
 %% Compute the depth
 % Select two point on the depth extremes of the lower side
-x = [1210 ; 6976; 1];
-y = [8721; 6145 ; 1];
+points = load('iacv_homework\variables\metric_points.mat');
+points = points.points; 
+
+x1 = [points(1,1); points(1,2); 1];
+y1 = [points(2,1); points(2,2); 1];
 
 % Compute the distance between the two points
-depth = norm(x - y);
+depth = norm(x1 - y1);
 
 
 %% Compute the width
 % Select two point on the width extremes of the lower side
-x1 = [1210 ; 6976; 1]; % Same as x
-y1 = [1522; 9671 ; 1];
+x = [points(2,1); points(2,2); 1];
+y = [points(3,1); points(3,2); 1];
 
 % Compute the distance between the two points
-width = norm(x1 - y1);
+width = norm(x - y);
 
 
 %% Compute the real depth
 % We know that the real width is one
-real_depth = (width * 1) / depth;
+real_depth =  depth / width;
 
 
 %% Compute the angle between the lines identified by the points
-% Compute the line for the depth 
+% Compute the line for the width 
 l = points_to_line(x(1), x(2), y(1), y(2));
 
 % Compute the line for the depth

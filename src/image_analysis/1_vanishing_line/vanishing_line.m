@@ -21,8 +21,12 @@ img = imread('iacv_homework\images\cropped.jpg');
 
 % Find the two lines (parallel in the real object) identified by the two
 % pair of points 
-ll1 = points_to_line(109, 23, 1019, 153);
-ll3 = points_to_line(126, 553, 879, 526);
+points = load('iacv_homework\variables\points.mat');
+points = points.points;
+
+
+ll1 = points_to_line(points(9,1), points(9,2), points(11,1), points(11,2));
+ll3 = points_to_line(points(14,1), points(14,2), points(20,1), points(20,2));
 
 % Find the intersection point of the two lines, that is the vanishing point
 pl = lines_intersection(ll1, ll3);
@@ -35,8 +39,8 @@ pl = lines_intersection(ll1, ll3);
 
 % Find the two lines (parallel in the real object) identified by the two
 % pair of points 
-lm1 = points_to_line(109, 23, 170, 229);
-lm4 = points_to_line(1019, 153, 834, 278);
+lm1 = points_to_line(points(5,1), points(5,2), points(11,1), points(11,2));
+lm4 = points_to_line(points(2,1), points(2,2), points(9,1), points(9,2));
 
 % Find the intersection point of the two lines, that is the vanishing point
 pm = lines_intersection(lm1, lm4);
@@ -69,8 +73,8 @@ line_plotter(ll1, 0, 3400, 'r-')
 line_plotter(ll3, 0, 3400, 'r-')
 
 % Plotting the lines for the depth dimension m
-line_plotter(lm1, 100, 330, 'r-')
-line_plotter(lm4, 108, 1200, 'r-')
+line_plotter(lm1, 100, 1000, 'r-')
+line_plotter(lm4, 108, 340, 'r-')
 
 % Plot the lvanishing points for width and depth, respectively
 point_plotter(pl, 'k.'); 

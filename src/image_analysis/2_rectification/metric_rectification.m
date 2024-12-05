@@ -14,19 +14,26 @@ img = imread('iacv_homework\images\rectified.jpg');
 
 
 %% Select two pairs of orthogonal lines used for the stratified method
+
+
+points = load('iacv_homework\variables\rect_points.mat');
+points = points.points; 
+
+
 % First pair of orthogonal lines
-l = points_to_line(35, 1840, 845, 3604);
-m = points_to_line(35, 1840, 6711, 2746);
+l = points_to_line(points(1,1), points(1,2), points(2,1), points(2,2));
+m = points_to_line(points(2,1), points(2,2), points(3,1), points(3,2));
 
 % Insert the pair as a contraint in matrix A (first row) 
 A(1,:) = [l(1) * m(1), l(1) * m(2) + l(2) * m(1), l(2) * m(2)];
 
 % Second pair of orthogonal lines
-l1 = points_to_line(114, 24, 721, 409);
-m1 = points_to_line(261, 358, 574, 83);
+l1 = points_to_line(points(4,1), points(4,2), points(5,1), points(5,2));
+m1 = points_to_line(points(6,1), points(6,2), points(7,1), points(7,2));
 
 % Insert the pair as a contraint in matrix A (second row)
 A(2,:) = [l1(1) * m1(1), l1(1) * m1(2) + l1(2) * m1(1), l1(2) * m1(2)];
+
 
 %% Solve the system to find the matrix S
 % Perform Singular Value Decomposition on matrix A
@@ -62,7 +69,7 @@ H = inv(H);
 % Create a projective 2D transformation object using H and apply the 
 % projective transformation to the input image
 tform = projective2d(H');
-metric_image = imwarp(img,tform);
+metric_image = imwarp(img, tform, 'FillValues', 255);
 
 
 %% Image plotting
