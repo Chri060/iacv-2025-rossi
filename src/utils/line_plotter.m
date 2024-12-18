@@ -1,4 +1,4 @@
-function line_plotter(l, min, max, color)
+function [] = line_plotter(l)
     % Function used to plot a line
     %
     % Inputs:
@@ -14,11 +14,11 @@ function line_plotter(l, min, max, color)
     %   draws the line directly in the previously opened image
 
     % Create a vector of points between 
-    x = linspace(min, max);  
+    x = linspace(0, 10000);  
 
     % Create a vector of the corrisponding y for each point in vector x
     y = (- l(1) * x - l(3)) / l(2);
 
     % Plot the line with the selected color
-    plot(x, y, color, 'LineWidth', 1.5);
+    plot(x, y, 'r-', 'LineWidth', 1.5);
 end

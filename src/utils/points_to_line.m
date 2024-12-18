@@ -1,20 +1,17 @@
-function [l] = points_to_line(x1, y1, x2, y2)
+function [l] = points_to_line(p1, p2)
     % Function used to compute the the line throug two points
     %
     % Inputs:
-    %   x1 - scalar representing the x coordinate of the first point
-    %   y2 - scalar representing the y coordinate of the first point
-    %   x2 - scalar representing the x coordinate of the second point
-    %   y2 - scalar representing the y coordinate of the second point
+    %   p1 - 1x3 vector representing a point in homogeneous coordinates
+    %   p2 - 1x3 vector representing a point in homogeneous coordinates
     %
     % Output:
     %   l - 1x3 vector [a, b, c] representing the line passing through 
-    %       the given point
+    %       the given points
 
-    % Represent the points in homogeneous coordinates by simply adding 
-    % w = 1
-    p1 = [x1; y1; 1];
-    p2 = [x2; y2; 1];
+    % Normalize the points
+    p1 = p1 ./ p1(3);
+    p2 = p2 ./ p2(3);
 
     % Compute the line in homogeneous coordinates with cross product
     l = cross(p1, p2);

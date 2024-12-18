@@ -1,4 +1,4 @@
-function point_plotter(p, color)
+function [] = point_plotter(p)
     % Function used to plot a point
     %
     % Inputs:
@@ -12,5 +12,5 @@ function point_plotter(p, color)
     %   draws the point directly in the previously opened image
 
     % Plot a point on the given coordinates with the selected color
-    plot(p(1), p(2), color, 'MarkerSize', 35);
+    plot(p(1), p(2), 'r.', 'MarkerSize', 35);
 end
