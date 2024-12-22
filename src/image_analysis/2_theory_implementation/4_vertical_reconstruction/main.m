@@ -20,6 +20,8 @@ vanishing = load('iacv_homework\variables\vanishing.mat');
 ph = vanishing.ph; 
 pm = vanishing.pm; 
 pl = vanishing.pl; 
+scene = load('iacv_homework\variables\scene.mat');
+scene_points = scene.points;
 
 
 %% Computation of useful variables
@@ -50,7 +52,7 @@ J = [double(sol.x(2));  double(sol.y(2));  1];
 imDCCP = I * J' + J * I';
 imDCCP = imDCCP ./ norm(imDCCP);
 
-% Compute the homography by forcing the IAC to the canonical poistion
+% Compute the homography by forcing the imDCCP to the canonical poistion
 [U, D, V] = svd(imDCCP);
 D(3, 3) = 1;
 H = inv(U * sqrt(D));
@@ -58,36 +60,41 @@ H = inv(U * sqrt(D));
 % Applying the homography to the image
 tform = projective2d(H');
 img_mod = imwarp(img, tform, 'FillValues', 255); 
+img_mod = imrotate(img_mod, -135);
 
 
 %% Height computation
 % Load the points from a variable
-p1 = [638; 2270; 1];
-p2 = [604; 1773; 1];
-p3 = [2080; 2250; 1];
+p1 = [809, 2805, 1]';
+p3 = [2350, 2417, 1]';
+p2 = [2379, 2789, 1]';
+
 
 % compute the lines passing through the points
 l1 = points_to_line(p1, p2);
-l2 = points_to_line(p1, p3);
+l2 = points_to_line(p2, p3);
 
 % Compte the relative width and height
-height = norm (p1 - p2); 
-lenght = norm (p2 - p3); 
+lenght= norm (p1 - p2); 
+height  = norm (p2 - p3); 
 
 % Compare width and height to find the real height
 real_height = height / lenght;
-angle = 180 - angle_between_lines(l1, l2);
+angle = angle_between_lines(l1, l2);
 
 
 %% Image plotting
 points = [p1';p2';p3'];
 lines = [l1'; l2'];
-% img_mod = imrotate(img_mod, -153);
 image_plotter(img_mod, points, lines, 1)
 
 
 %% Printing the results
-disp("The transformation matrix is: "); 
+disp("The circular point I coordinates are: [x = " + I(1) + ", y = " + I(2) + ", w = " + I(3) + "]")
+disp("The circular point J coordinates are: [x = " + J(1) + ", y = " + J(2) + ", w = " + J(3) + "]")
+disp("The image of the dual conic matrix is: "); 
+disp(imDCCP);
+disp("The homography matrix is: "); 
 disp(H);
 disp("The real height is: " + real_height);
 disp("The angle between the lines is: " + angle);

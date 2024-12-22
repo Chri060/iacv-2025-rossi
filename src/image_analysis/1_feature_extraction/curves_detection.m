@@ -98,7 +98,7 @@ S = [a, b/2, d/2;  b/2, c, e/2;  d/2, e/2, f];
 conics = [C;  S];
 label_points = [curves_points(2, 1:2); curves_points(8, 1:2)];
 labels = ['C';  'S'];
-conic_plotter(img, conics, label_points, labels);
+conic_plotter(img, conics, label_points, labels, 2);
 
 
 %% Saving the variables

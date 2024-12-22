@@ -9,6 +9,9 @@ addpath('iacv_homework\utils');
 clear;
 close all;
 
+% Import the image
+img = imread('iacv_homework\images\scene.jpg');
+
 % Import the variables 
 curves = load('iacv_homework\variables\curves.mat');
 S = curves.S;
@@ -17,12 +20,19 @@ S = curves.S;
 %% Find some points of the curve
 % Select the number of points desired
 number_of_points = 12;
+seed = 1234567890;
 
 % Find some random points in the curve S
-points = generateConicPoints(img, S, number_of_points);
+points = generate_conic_points(img, S, number_of_points, seed);
 
 % Transform all points in homogeneous coordinates
 points = [points;  ones(1, 12)];
+
+
+
+%% Plotting the image
+lines = [];
+image_plotter(img, points', lines, 1); 
 
 
 %% Printing the results

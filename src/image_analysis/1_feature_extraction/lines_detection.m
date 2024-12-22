@@ -17,7 +17,6 @@ img = imread('iacv_homework\images\scene.jpg');
 % Preprocess the image
 grayImage = rgb2gray(img);                 % Convert to grayscale
 smoothedImage = imgaussfilt(grayImage, 1); % Denoise with Gaussian
-equalizedImage = histeq(smoothedImage);    % Contrast enhancement
 
 % Apply Canny edge detection
 edges = edge(smoothedImage, 'Canny');

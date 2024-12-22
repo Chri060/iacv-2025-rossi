@@ -45,27 +45,27 @@ l2 = lines(2, :);
 m5 = lines(8, :);
 
 % Second pair of orthogonal lines
-l1 = points_to_line(points(4, :), points(7,:));
-m1 = points_to_line(points(3, :), points(8,:));
+d1 = points_to_line(points(4, :), points(7,:));
+d2 = points_to_line(points(3, :), points(8,:));
 
 % Compute the transformation on the lines
 H_points = inv(H_rect); 
 
 l2_t = H_points' * l2';      
 m5_t = H_points' * m5';
-l1_t = H_points' * l1'; 
-m1_t = H_points' * m1';
+d1_t = H_points' * d1'; 
+d2_t = H_points' * d2';
 
 % Normalize transformed lines
 l2_t = l2_t / l2_t(3);
 m5_t = m5_t / m5_t(3);
-l1_t = l1_t / l1_t(3);
-m1_t = m1_t / m1_t(3);
+d1_t = d1_t / d1_t(3);
+d2_t = d2_t / d2_t(3);
 
 
 %% Plotting the image
 % Display the rectified image
-lines_rect = [l2_t';  m5_t';  l1_t';  m1_t'];
+lines_rect = [l2_t';  m5_t';  d1_t';  d2_t'];
 points_rect = [];
 image_plotter(img_rect, points_rect, lines_rect, 0);
 
@@ -73,7 +73,7 @@ image_plotter(img_rect, points_rect, lines_rect, 0);
 %% Create the matrix A and apply SVD to find matrix S
 A = [
     l2_t(1) * m5_t(1), l2_t(1) * m5_t(2) + l2_t(2) * m5_t(1), l2_t(2) * m5_t(2); 
-    l1_t(1) * m1_t(1), l1_t(1) * m1_t(2) + l1_t(2) * m1_t(1), l1_t(2) * m1_t(2);
+    d1_t(1) * d2_t(1), d1_t(1) * d2_t(2) + d1_t(2) * d2_t(1), d1_t(2) * d2_t(2);
 ];
 
 % Perform Singular Value Decomposition on matrix A
@@ -90,7 +90,7 @@ S = [s(1), s(2); s(2), s(3)];
 % Perform Singular Value Decomposition on matrix S
 [U, D, V] = svd(S);
 
-% Reconstruct matrix A using U, D, and V from SVD
+% Reconstruct matrix G using U, D, and V from SVD
 % The square root of D ensures the matrix satisfies geometric constraints
 G = U * sqrt(D) * V';
 
@@ -137,8 +137,8 @@ m5 = H_lines * m5';
 
 
 %% Plotting the image
-points_met = [p1';  p2';  p3']; 
-lines_met = [l2';  m5']; 
+points_met = []; 
+lines_met = []; 
 image_plotter(img_met, points_met, lines_met, 0); % img_met
 
 

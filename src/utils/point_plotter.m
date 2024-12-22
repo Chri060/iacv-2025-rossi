@@ -1,16 +1,30 @@
 function [] = point_plotter(p)
-    % Function used to plot a point
+    % POINT_PLOTTER Plots a point on the current figure.
+    %
+    % This function plots a single point on a previously opened image or figure.
+    % The point is displayed as a red dot by default with a specified marker size.
     %
     % Inputs:
-    %   p - vector with the coordinates of the point to be plotted
-    %   color - color and style for the line displayed
-    %           The possible options are: 
-    %           b (blue), g (green), k (black), m (magenta), c (cyan), y (yellow)
-    %           -- (dashed), : (dotted), . (dash-dot)
+    %   p - 1x2 or 1x3 vector representing the coordinates of the point to be plotted.
+    %       If homogeneous coordinates (1x3), the function normalizes them.
     %
-    % Output:
-    %   draws the point directly in the previously opened image
+    % Outputs:
+    %   None. The point is drawn directly on the current figure or image.
+    %
+    % Example:
+    %   p = [100, 200];
+    %   point_plotter(p);
+    %   % Plots a red point at (100, 200).
+    %
+    % Note:
+    %   The color and style are hardcoded as 'r.' (red dot) with a marker size of 35.
+    %   For custom styling, modify the plot command directly in the code.
+    
+    % Normalize the point if in homogeneous coordinates
+    if numel(p) == 3
+        p = p(1:2) ./ p(3);
+    end
 
-    % Plot a point on the given coordinates with the selected color
+    % Plot the point as a red dot with a large marker size
     plot(p(1), p(2), 'r.', 'MarkerSize', 35);
 end
