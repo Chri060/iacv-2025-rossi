@@ -112,7 +112,7 @@ object_vertices = [
 ];
 
 % Plot of the actual parallelepiped with a camera
-object_plotter(object_vertices, 1, cameraRotation, cameraPosition, [])
+object_plotter(object_vertices, 1, cameraRotation, cameraPosition)
 
 
 %% Printing the results

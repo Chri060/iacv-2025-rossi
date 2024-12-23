@@ -1,4 +1,4 @@
-function [] = object_plotter(points, camera, cameraRotation, cameraPosition, curve_points)
+function [] = object_plotter(points, camera, cameraRotation, cameraPosition)
     % OBJECT_PLOTTER Plots a 3D object and optionally a camera in a 3D space.
     %
     % This function visualizes a 3D object defined by its vertices and optionally 
@@ -60,10 +60,6 @@ function [] = object_plotter(points, camera, cameraRotation, cameraPosition, cur
     % Optionally plot the camera if specified
     if camera ~= 0
         camera_plotter(cameraRotation, cameraPosition)
-    end 
-
-    if numel(curve_points) ~= 0
-        pcshow(pointCloud(curve_points, Color='green'), 'MarkerSize', 800, 'BackgroundColor', [1, 1, 1]);
     end 
     
     % Configure the 3D plot
