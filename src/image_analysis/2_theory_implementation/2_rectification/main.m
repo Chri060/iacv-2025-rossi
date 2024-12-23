@@ -172,4 +172,4 @@ disp("The angle between width and length is: " + angle);
 
 
 %% Saving the variables
-save('iacv_homework\variables\rectification.mat', 'H_rect', 'H_met', 'H', 'real_depth');
+save('iacv_homework\variables\rectification.mat', 'H_rect', 'H_met', 'H', 'real_depth', 'tform');

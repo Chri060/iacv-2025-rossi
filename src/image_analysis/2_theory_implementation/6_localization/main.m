@@ -9,6 +9,9 @@ addpath('iacv_homework\utils');
 clear;
 close all;
 
+% Import the image
+img = imread('iacv_homework\images\scene.jpg');
+
 % Import the variables 
 scene = load('iacv_homework\variables\scene.mat');
 points = scene.points;
@@ -29,6 +32,7 @@ B = points(1, 1:2);  % Left top point
 C = points(2, 1:2);  % Right top point
 D = points(14, 1:2); % Right bottom point
 
+image_plotter(img, [A; B; C; D], [], 1)
 % Computation of the homography for metric rectification
 H = H_met * H_aff;
 
@@ -56,7 +60,7 @@ image_points = [A; B; C; D];
 %% Computation of the homographies from world to image
 % Find the homography from image frame to world frame
 tform = fitgeotrans(image_points, real_points, 'projective');
-H_img_to_world  = (tform.T).';
+H_img_to_world = (tform.T).';
 
 % Find the homography from world frame to image frame
 H_world_to_img = inv(H_img_to_world * H);
@@ -118,4 +122,4 @@ disp(cameraRotation);
 
 
 %% Saving the variables
-save('iacv_homework\variables\localization.mat', 'object_vertices', 'cameraRotation', 'cameraPosition' , 'H_img_to_world');
+save('iacv_homework\variables\localization.mat', 'object_vertices', 'cameraRotation', 'cameraPosition' , 'tform');

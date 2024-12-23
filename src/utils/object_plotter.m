@@ -1,4 +1,4 @@
-function [] = object_plotter(points, camera, cameraRotation, cameraPosition, conic)
+function [] = object_plotter(points, camera, cameraRotation, cameraPosition, curve_points)
     % OBJECT_PLOTTER Plots a 3D object and optionally a camera in a 3D space.
     %
     % This function visualizes a 3D object defined by its vertices and optionally 
@@ -62,11 +62,14 @@ function [] = object_plotter(points, camera, cameraRotation, cameraPosition, con
         camera_plotter(cameraRotation, cameraPosition)
     end 
 
-    if numel(conic) ~= 0
-        conic_3d_plotter(conic)
+    if numel(curve_points) ~= 0
+        pcshow(pointCloud(curve_points, Color='green'), 'MarkerSize', 800, 'BackgroundColor', [1, 1, 1]);
     end 
     
     % Configure the 3D plot
+    xlabel('X-axis'); % Replace with your desired label for the x-axis
+    ylabel('Y-axis'); % Replace with your desired label for the y-axis
+    zlabel('Z-axis'); % Replace with your desired label for the y-axis
     axis equal;
     grid on;
     hold off;

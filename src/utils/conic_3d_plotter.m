@@ -6,32 +6,20 @@ function [] = conic_3d_plotter(A)
     %
     % Output:
     %   A 3D plot of the conic.
-    
-    % Create a meshgrid of x and y values in the range [-1000, 1000]
-    [X, Y] = meshgrid(-1000:10:1000, -1000:10:1000);  % Adjust step size (50) as needed
-    
-    % Initialize Z values to NaN
-    Z = NaN(size(X));
-    
-    % Solve for Z based on the conic equation
-    for i = 1:size(X, 1)
-        for j = 1:size(X, 2)
-            % Homogeneous coordinates (x, y, 1)
-            point = [X(i, j); Y(i, j); 1];
-            
-            % Check if the point satisfies the conic equation (A * point^2 = 0)
-            if abs(point' * A * point) < 1e-6
-                Z(i, j) = 0; % Z = 0 at the conic
-            end
-        end
-    end
-    
-    % Plot the conic in 3D
-    
-    surf(X, Y, Z, 'EdgeColor', 'none');
-    title('3D Conic Plot');
-    xlabel('X');
-    ylabel('Y');
-    zlabel('Z');
 
+    % Create a meshgrid of x and y values in the range [-1000, 1000]
+    [X, Y] = meshgrid(-1000:1:1000, -1000:1:1000);  
+    
+    conic = A;
+    % Convert to homogeneous coordinates (x, y, 1)
+    homogeneous_coords = [X(:)'; Y(:)'; ones(1, numel(X))];
+ 
+    % Evaluate the conic equation for each point
+    conic_values = sum((homogeneous_coords' * conic) .* homogeneous_coords', 2);
+    
+    % Reshape the conic values to match the image grid
+    conic_values = reshape(conic_values, [2001, 2001]);
+    
+    % Plot the conic as a contour where the conic equation holds
+    contour(X, Y, conic_values, [0, 0], 'r', 'LineWidth', 2);  % 'r' is red color
 end
