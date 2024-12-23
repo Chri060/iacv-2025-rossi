@@ -43,7 +43,7 @@ function points = generate_conic_points(img, S, numPoints, seed)
         x_h = [x; y; 1];
 
         % Check if the point satisfies the conic equation
-        if abs(x_h' * S * x_h) < 1e-6 % Threshold for conic proximity
+        if abs(x_h' * S * x_h) < 1e-6
             % Check if the point is unique
             if ~ismember([x; y]', points(:, 1:count)', 'rows')
                 % Add the point to the list

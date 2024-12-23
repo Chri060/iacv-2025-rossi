@@ -1,21 +1,21 @@
-% =====================================================================
-%                             Rectification
-% =====================================================================
+% ========================================================================= 
+%   Rectification
+% ========================================================================= 
 
 % Import utils 
-addpath('iacv_homework\utils');
+addpath('utils');
 
 % Clear all variables and close all
 clear;
 close all;
 
 % Import the image
-img = imread('iacv_homework\images\scene.jpg');
+img = imread('images\scene.jpg');
 
 % Import the variables 
-vanishing = load('iacv_homework\variables\vanishing.mat');
+vanishing = load('variables\vanishing.mat');
 l_infty = vanishing.l_infty;
-scene = load('iacv_homework\variables\scene.mat');
+scene = load('variables\scene.mat');
 lines = scene.lines; 
 points = scene.points; 
 
@@ -25,18 +25,16 @@ points = scene.points;
 l_infty = l_infty ./ l_infty(3);
 
 % Create a homography to map the line at the infinity back to [0; 0; 1]
-H_rect = [1, 0, 0;  0, 1, 0;  l_infty];
+H_aff = [1, 0, 0;  0, 1, 0;  l_infty];
 
 % Apply the image to the whole image
-tform = projective2d(H_rect');
-img_rect = imwarp(img, tform, 'OutputView', imref2d(10 * size(img)), 'FillValues', 255);
+tform = projective2d(H_aff');
+img_aff = imwarp(img, tform, 'OutputView', imref2d(10 * size(img)), 'FillValues', 255);
 
 
 %% Plotting the image
 % Display the rectified image
-lines_rect = [];
-points_rect = [];
-image_plotter(img_rect, points_rect, lines_rect, 0);
+image_plotter(img_aff, [], [], 0);
 
 
 %% Select two pairs of orthogonal lines used for the stratified method
@@ -49,7 +47,7 @@ d1 = points_to_line(points(4, :), points(7,:));
 d2 = points_to_line(points(3, :), points(8,:));
 
 % Compute the transformation on the lines
-H_points = inv(H_rect); 
+H_points = inv(H_aff); 
 
 l2_t = H_points' * l2';      
 m5_t = H_points' * m5';
@@ -65,9 +63,8 @@ d2_t = d2_t / d2_t(3);
 
 %% Plotting the image
 % Display the rectified image
-lines_rect = [l2_t';  m5_t';  d1_t';  d2_t'];
-points_rect = [];
-image_plotter(img_rect, points_rect, lines_rect, 0);
+lines_aff = [l2_t';  m5_t';  d1_t';  d2_t'];
+image_plotter(img_aff, [], lines_aff, 0);
 
 
 %% Create the matrix A and apply SVD to find matrix S
@@ -107,7 +104,7 @@ H_met = inv(H_met);
 
 % Create a projective 2D transformation object using H and apply the 
 % projective transformation to the input image
-H = H_met * H_rect;
+H = H_met * H_aff;
 tform = projective2d(H');
 img_met = imwarp(img, tform, 'OutputView', imref2d(10 * size(img)), 'FillValues', 255);
 
@@ -137,9 +134,7 @@ m5 = H_lines * m5';
 
 
 %% Plotting the image
-points_met = []; 
-lines_met = []; 
-image_plotter(img_met, points_met, lines_met, 0); % img_met
+image_plotter(img_met, [], [], 0);
 
 
 %% Compute the dimensions of the plane 
@@ -158,13 +153,13 @@ angle = angle_between_lines(l2, m5);
 
 
 %% Saving the images
-imwrite(img_rect, 'iacv_homework\images\rectified.jpg');
-imwrite(img_met, 'iacv_homework\images\metric.jpg');
+imwrite(img_aff, 'images\rectified.jpg');
+imwrite(img_met, 'images\metric.jpg');
 
 
 %% Printing the results
 disp("The rectification matrix is: ");
-disp(H_rect);
+disp(H_aff);
 disp("The metric rectification matrix is: ");
 disp(H_met);
 disp("The ratio between width and length is: " + real_depth);
@@ -172,4 +167,4 @@ disp("The angle between width and length is: " + angle);
 
 
 %% Saving the variables
-save('iacv_homework\variables\rectification.mat', 'H_rect', 'H_met', 'H', 'real_depth', 'tform');
+save('variables\rectification.mat', 'H_aff', 'H_met', 'H', 'real_depth');

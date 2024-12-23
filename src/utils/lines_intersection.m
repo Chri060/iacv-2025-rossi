@@ -18,10 +18,6 @@ function [intersection] = lines_intersection(l1, l2)
     %   l2 = [1, 1, -3];  % Line: x + y - 3 = 0
     %   intersection = lines_intersection(l1, l2);
     %   % Returns: intersection = [2, 1]
-    %
-    % Note:
-    %   The input lines are assumed to be normalized. If they are not, the function
-    %   ensures normalization to avoid numerical instability.
 
     % Normalize the lines to ensure homogeneous coordinates are consistent
     l1 = l1 ./ l1(3);

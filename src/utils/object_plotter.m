@@ -12,7 +12,6 @@ function [] = object_plotter(points, camera, cameraRotation, cameraPosition)
     %   camera          - Integer (0 or 1). If non-zero, the camera is plotted.
     %   cameraRotation  - 3x3 rotation matrix representing the camera's orientation.
     %   cameraPosition  - 1x3 vector representing the camera's position in 3D space.
-    %   conic           - 3x3 matrix representing a conic
     %
     % Outputs:
     %   None. The function directly creates a 3D plot in a new figure.
@@ -63,9 +62,9 @@ function [] = object_plotter(points, camera, cameraRotation, cameraPosition)
     end 
     
     % Configure the 3D plot
-    xlabel('X-axis'); % Replace with your desired label for the x-axis
-    ylabel('Y-axis'); % Replace with your desired label for the y-axis
-    zlabel('Z-axis'); % Replace with your desired label for the y-axis
+    xlabel('X-axis'); 
+    ylabel('Y-axis'); 
+    zlabel('Z-axis'); 
     axis equal;
     grid on;
     hold off;

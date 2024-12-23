@@ -1,19 +1,19 @@
-% ====================================================================
-%                            Vanishing line
-% ====================================================================
+% ========================================================================= 
+%   Vanishing line
+% ========================================================================= 
 
 % Import utils 
-addpath('iacv_homework\utils');
+addpath('utils');
 
 % Clear all variables and close all
 clear;
 close all;
 
 % Import the image
-img = imread('iacv_homework\images\scene.jpg');
+img = imread('images\scene.jpg');
 
 % Import the variables
-scene = load('iacv_homework\variables\scene.mat');
+scene = load('variables\scene.mat');
 lines = scene.lines;
 
 
@@ -64,4 +64,4 @@ disp("The horizontal vanishing line parameters are: [a = " + l_infty(1) + ", b =
 
 
 %% Saving the variables
-save('iacv_homework\variables\vanishing.mat', 'l_infty', 'pl', 'pm', 'ph');
+save('variables\vanishing.mat', 'l_infty', 'pl', 'pm', 'ph');

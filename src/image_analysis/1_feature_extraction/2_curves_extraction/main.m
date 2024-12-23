@@ -1,19 +1,19 @@
-% ======================================================================
-%                            Curves detection
-% ======================================================================
+% =========================================================================
+%   Curves extraction                            
+% =========================================================================
 
 % Import utils 
-addpath('iacv_homework\utils');
+addpath('utils');
 
 % Clear all variables and close all
 clear;
 close all;
 
 % Import the image
-img = imread('iacv_homework\images\scene.jpg');
+img = imread('images\scene.jpg');
 
 % Import the variables
-scene = load('iacv_homework\variables\scene.mat');
+scene = load('variables\scene.mat');
 curves_points = scene.curves_points;
 
 
@@ -28,10 +28,9 @@ C_points = [
 ];
 
 % Plot the image with the found points
-lines = [];
-points = C_points;
-image_plotter(img, points, lines, 1);
+image_plotter(img, C_points, [], 1);
 
+% Estimate the conic matrix
 C = conic_extractor(C_points);
 
 
@@ -46,12 +45,10 @@ S_points = [
 ];
 
 % Plot the image with the found points
-lines = [];
-points = S_points;
-image_plotter(img, points, lines, 1);
+image_plotter(img, S_points, [], 1);
 
+% Estimate the conic matrix
 S = conic_extractor(S_points);
-
 
 %% Plotting the conics
 conics = [C;  S];
@@ -61,4 +58,4 @@ conic_plotter(img, conics, label_points, labels, 2);
 
 
 %% Saving the variables
-save('iacv_homework\variables\curves.mat', 'C', 'S');
+save('variables\curves.mat', 'C', 'S');

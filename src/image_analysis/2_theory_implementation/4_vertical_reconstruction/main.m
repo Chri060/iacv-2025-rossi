@@ -1,82 +1,82 @@
-% =======================================================================
-%                         Vertical reconstruction
-% =======================================================================
+% ========================================================================= 
+%   Vertical reconstruction
+% ========================================================================= 
 
 % Import utils 
-addpath('iacv_homework\utils');
+addpath('utils');
 
 % Clear all variables and close all
 clear;
 close all;
 
 % Import the image
-img = imread('iacv_homework\images\scene.jpg');
+img = imread('images\scene.jpg');
 
 % Import the variables 
-calibration = load('iacv_homework\variables\calibration.mat');
+calibration = load('variables\calibration.mat');
 K = calibration.K;
 omega = calibration.IAC;
-vanishing = load('iacv_homework\variables\vanishing.mat');
+vanishing = load('variables\vanishing.mat');
 ph = vanishing.ph; 
 pm = vanishing.pm; 
 pl = vanishing.pl; 
-scene = load('iacv_homework\variables\scene.mat');
+scene = load('variables\scene.mat');
 scene_points = scene.points;
 
 
 %% Computation of useful variables
+% Compute the line at infinity
 l_infty = points_to_line(ph, pl);
 
 
-%% Intersection between the Image of the Absolute Conic and the line at the infinity
-% System variables
+%% Intersection between the Image of the Absolute Conic and the line at infinity
+% System variables (for symbolic computation of the intersection points)
 syms x y;
 
-% Equation for the Image of the Absolute Conic
+% Equation for the Image of the Absolute Conic (IAC)
 eq1 = omega(1, 1) * x^2 + 2 * omega(1, 2) * x * y + omega(2, 2) * y^2 + 2 * omega(1, 3) * x + 2 * omega(2, 3) * y + omega(3, 3) == 0;
 
-% Equation for the line at the infinity
+% Equation for the line at infinity (l_infty)
 eq2 = l_infty(1) * x + l_infty(2) * y + l_infty(3) == 0;
 
-% System definition and solution
+% Solve the system of equations for the intersection points
 eqns = [eq1, eq2];
 sol = solve(eqns, [x, y]);
 
-% Intersection points (image of circular points
+% Get the solutions for the intersection points (I and J)
 I = [double(sol.x(1));  double(sol.y(1));  1];
 J = [double(sol.x(2));  double(sol.y(2));  1];
 
 
 %% Homography computation
-% Definition of the image of the dual conic
+% Define the image of the dual conic (imDCCP) from the intersection points I and J
 imDCCP = I * J' + J * I';
 imDCCP = imDCCP ./ norm(imDCCP);
 
-% Compute the homography by forcing the imDCCP to the canonical poistion
+% Compute the homography matrix by forcing imDCCP to the canonical position
 [U, D, V] = svd(imDCCP);
 D(3, 3) = 1;
 H = inv(U * sqrt(D));
 
-% Applying the homography to the image
+% Apply the homography to the image
 tform = projective2d(H');
 img_mod = imwarp(img, tform, 'FillValues', 255); 
 img_mod = imrotate(img_mod, -135);
 
 
 %% Height computation
-% Load the points from a variable
+% Define the 3 points used to compute the height
 p1 = [809, 2805, 1]';
 p3 = [2350, 2417, 1]';
 p2 = [2379, 2789, 1]';
 
-
-% compute the lines passing through the points
+% Compute the lines passing through the points
 l1 = points_to_line(p1, p2);
 l2 = points_to_line(p2, p3);
 
-% Compte the relative width and height
-lenght= norm (p1 - p2); 
-height  = norm (p2 - p3); 
+% Compute the relative width and height
+lenght= norm(p1 - p2); 
+height  = norm(p2 - p3); 
 
 % Compare width and height to find the real height
 real_height = height / lenght;
@@ -84,8 +84,8 @@ angle = angle_between_lines(l1, l2);
 
 
 %% Image plotting
-points = [p1';p2';p3'];
-lines = [l1'; l2'];
+points = [p1';  p2';  p3'];
+lines = [l1';  l2'];
 image_plotter(img_mod, points, lines, 1)
 
 
@@ -101,8 +101,8 @@ disp("The angle between the lines is: " + angle);
 
 
 %% Saving the image
-imwrite(img_mod, 'iacv_homework\images\height.jpg');
+imwrite(img_mod, 'images\height.jpg');
 
 
 %% Saving the variables
-save('iacv_homework\variables\height.mat', 'H', 'real_height');
+save('variables\height.mat', 'H', 'real_height');

@@ -1,16 +1,16 @@
-% =====================================================================
-%                            Lines detection
-% =====================================================================
+% ========================================================================= 
+%   Lines extraction                     
+% ========================================================================= 
 
 % Import utils 
-addpath('iacv_homework\utils');
+addpath('utils');
 
 % Clear all variables and close all
 clear;
 close all;
 
 % Import the image
-img = imread('iacv_homework\images\scene.jpg');
+img = imread('images\scene.jpg');
 
 
 %% Edges detection
@@ -37,11 +37,10 @@ points_harris = detectHarrisFeatures(edges, 'MinQuality', 0.001, 'FilterSize', 3
 
 
 %% Extract useful points for the analysis
-lines = [];
 points = [points_harris.Location(:, 1), points_harris.Location(:, 2)];
-image_plotter(img, points, lines, 0); % Set last parameter to 1 for labels
+image_plotter(img, points, [], 0); 
 
-% Select the center of the pixel and move to the best location
+% Select the useful points
 points = [  
     ceil(points_harris.Location(340, 1)) - 1, ceil(points_harris.Location(340, 2)) - 1, 1; 
     ceil(points_harris.Location(5933, 1)) + 1, ceil(points_harris.Location(5933, 2)), 1;  
@@ -61,6 +60,7 @@ points = [
     ceil(points_harris.Location(5081, 1)), ceil(points_harris.Location(5081, 2)), 1; 
 ];
 
+% Select the points for the curves
 curves_points = [
     ceil(points_harris.Location(560, 1)), ceil(points_harris.Location(560, 2)), 1; % C
     ceil(points_harris.Location(1273, 1)), ceil(points_harris.Location(1273, 2)), 1;
@@ -74,7 +74,7 @@ curves_points = [
     ceil(points_harris.Location(3505, 1)), ceil(points_harris.Location(3505, 2)), 1;
 ];
 
-% Find the lines parameters given the points found before
+% Select the points for the lines
 lines = [
     points_to_line(points(1, :), points(2, :));      % l1 (1)
     points_to_line(points(11, :), points(14, :));    % l2 (2)
@@ -98,4 +98,4 @@ image_plotter(img, points, lines, 1);
 
 
 %% Saving the variables
-save('iacv_homework\variables\scene.mat', 'points', 'lines', 'curves_points');
+save('variables\scene.mat', 'points', 'lines', 'curves_points');

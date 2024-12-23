@@ -5,11 +5,11 @@ function [] = image_plotter(img, points, lines, points_label)
     % Optionally, it labels the points with their indices.
     %
     % Inputs:
-    %   img         - Image to be displayed.
-    %   points      - Nx2 or Nx3 matrix where each row represents a point
-    %                 in 2D or homogeneous coordinates.
-    %   lines       - Mx3 matrix where each row represents a line
-    %                 in homogeneous coordinates [a, b, c].
+    %   img          - Image to be displayed.
+    %   points       - Nx2 or Nx3 matrix where each row represents a point
+    %                  in 2D or homogeneous coordinates.
+    %   lines        - Mx3 matrix where each row represents a line
+    %                  in homogeneous coordinates [a, b, c].
     %   points_label - Boolean (1 or 0). If set to 1, the points are labeled
     %                  with their indices. If 0, no labels are displayed.
     %
