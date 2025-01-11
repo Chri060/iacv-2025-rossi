@@ -19,7 +19,7 @@ lines = scene.lines;
 
 %% Width vanishing point
 % Select the lines l2 and l3 from the matrix lines
-l2 = lines(2, :);
+l2 = lines(1, :);
 l3 = lines(3, :);
 
 % Find the intersection point of l2 and l3

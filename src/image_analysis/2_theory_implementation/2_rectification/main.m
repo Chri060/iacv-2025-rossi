@@ -156,7 +156,7 @@ angle = angle_between_lines(l2, m5);
 imwrite(img_aff, 'images\rectified.jpg');
 imwrite(img_met, 'images\metric.jpg');
 
-
+H_aff = H_aff';
 %% Printing the results
 disp("The rectification matrix is: ");
 disp(H_aff);

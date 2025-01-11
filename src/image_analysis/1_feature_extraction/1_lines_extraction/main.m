@@ -39,24 +39,24 @@ points_harris = detectHarrisFeatures(edges, 'MinQuality', 0.001, 'FilterSize', 3
 %% Extract useful points for the analysis
 points = [points_harris.Location(:, 1), points_harris.Location(:, 2)];
 image_plotter(img, points, [], 0); 
-
+% 4 7 3 8
 % Select the useful points
 points = [  
     ceil(points_harris.Location(340, 1)) - 1, ceil(points_harris.Location(340, 2)) - 1, 1; 
     ceil(points_harris.Location(5933, 1)) + 1, ceil(points_harris.Location(5933, 2)), 1;  
     ceil(points_harris.Location(460, 1)) - 1, ceil(points_harris.Location(460, 2)), 1; 
-    ceil(points_harris.Location(2779, 1)), ceil(points_harris.Location(2779, 2)) - 1, 1; 
+    ceil(points_harris.Location(2779, 1)), ceil(points_harris.Location(2779, 2)) - 2, 1; 
     ceil(points_harris.Location(4287, 1)) + 1, ceil(points_harris.Location(4287, 2)) - 1, 1; 
     ceil(points_harris.Location(5887, 1)) + 1, ceil(points_harris.Location(5887, 2)) + 1, 1; 
-    ceil(points_harris.Location(845, 1)) - 1, ceil(points_harris.Location(845, 2)), 1; 
-    ceil(points_harris.Location(2428, 1)) + 2, ceil(points_harris.Location(2428, 2)), 1; 
+    ceil(points_harris.Location(845, 1)) - 2, ceil(points_harris.Location(845, 2)) - 1, 1; 
+    ceil(points_harris.Location(2428, 1)) + 3, ceil(points_harris.Location(2428, 2)) - 2, 1; 
     ceil(points_harris.Location(3456, 1)), ceil(points_harris.Location(3456, 2)), 1; 
     ceil(points_harris.Location(5514, 1)), ceil(points_harris.Location(5514, 2)) - 2, 1; 
     ceil(points_harris.Location(2, 1)) - 4, ceil(points_harris.Location(2, 2)) + 1, 1; 
     ceil(points_harris.Location(2915, 1)) - 1, ceil(points_harris.Location(2915, 2)) + 1, 1; 
     ceil(points_harris.Location(4907, 1)) - 1, ceil(points_harris.Location(4907, 2)) + 1, 1; 
     ceil(points_harris.Location(6401, 1)) + 1, ceil(points_harris.Location(6401, 2)) + 4, 1; 
-    ceil(points_harris.Location(556, 1)) + 2, ceil(points_harris.Location(556, 2)) - 1, 1; 
+    ceil(points_harris.Location(556, 1)) + 3, ceil(points_harris.Location(556, 2)) , 1; 
     ceil(points_harris.Location(5081, 1)), ceil(points_harris.Location(5081, 2)), 1; 
 ];
 
