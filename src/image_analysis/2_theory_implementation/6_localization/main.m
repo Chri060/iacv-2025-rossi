@@ -16,8 +16,7 @@ img = imread('images\scene.jpg');
 scene = load('variables\scene.mat');
 points = scene.points;
 rectification = load('variables\rectification.mat');
-H_aff = rectification.H_aff;
-H_met = rectification.H_met; 
+H = rectification.H
 real_depth = rectification.real_depth; 
 calibration = load('variables\calibration.mat');
 K = calibration.K;
@@ -34,9 +33,6 @@ D = points(14, 1:2); % Right bottom point
 
 % Plot the selected points on the image for visualization
 image_plotter(img, [A; B; C; D], [], 1)
-
-% Compute the homography for metric rectification
-H = H_met * H_aff;
 
 % Apply the transformation to the selected points using the homography
 tform = projective2d(H.');

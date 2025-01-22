@@ -14,7 +14,7 @@ img = imread('images\scene.jpg');
 
 % Import the variables 
 calibration = load('variables\calibration.mat');
-K = calibration.K;
+IAC = calibration.IAC;
 vanishing = load('variables\vanishing.mat');
 ph = vanishing.ph; 
 pm = vanishing.pm; 
@@ -24,7 +24,7 @@ pl = vanishing.pl;
 %% Computation of useful variables
 % Compute the line at infinity
 l_infty = points_to_line(ph, pl);
-omega = inv(K * K');
+omega = IAC;
 
 %% Intersection between the Image of the Absolute Conic and the line at infinity
 % System variables (for symbolic computation of the intersection points)
@@ -59,16 +59,16 @@ H = inv(U * sqrt(D));
 % Apply the homography to the image
 tform = projective2d(H');
 img_mod = imwarp(img, tform, 'FillValues', 255); 
-img_mod = imrotate(img_mod, -122);
+img_mod = imrotate(img_mod, -116);
+img_mod = imcrop(img_mod, [545.5 2746.5 2312 628]);
 
 
 %% Height computation
 % Define the 3 points used to compute the height
+p1 = [239, 108, 1]';
+p2 = [2101, 487, 1]';
+p3 = [202, 477, 1]';
 
-
-p1 = [754, 2899, 1]';
-p3 = [696, 3262, 1]';
-p2 = [2421, 3253, 1]';
 
 
 % Compute the lines passing through the points
@@ -83,7 +83,6 @@ height  = norm(p1 - p3);
 real_height = height / lenght;
 angle = angle_between_lines(l1, l2);
 
-
 %% Image plotting
 points = [p1';  p2';  p3'];
 lines = [l1';  l2'];
@@ -97,8 +96,8 @@ disp("The image of the dual conic matrix is: ");
 disp(imDCCP);
 disp("The homography matrix is: "); 
 disp(H);
+disp("The angle between the sides is: " + angle);
 disp("The real height is: " + real_height);
-disp("The angle between the lines is: " + angle);
 
 
 %% Saving the image

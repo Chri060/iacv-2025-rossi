@@ -16,8 +16,7 @@ pl = vanishing.pl';
 pm = vanishing.pm';
 l_infty = vanishing.l_infty;
 rectification = load('variables\rectification.mat');
-H_met = rectification.H_met;
-H_aff = rectification.H_aff;
+H = rectification.H;
 
 
 %% Normalize all variables
@@ -26,7 +25,7 @@ pl = pl ./ pl(3);
 ph = ph ./ ph(3);
 pm = pm ./ pm(3);
 l_infty = l_infty ./ l_infty(3);
-H = H_met * H_aff;
+
 
 
 %% Define the system
@@ -39,7 +38,9 @@ omega = [a, 0, b;  0, 1, c;  b, c, d];
 
 %% Define the variables useful for the constraints
 % Construct lx matrix based on l_infinity values
-lx = [0, - l_infty(3), l_infty(2);  l_infty(3), 0, - l_infty(1);  - l_infty(2), l_infty(1), 0];  
+lx = [0, - l_infty(3), l_infty(2);  
+      l_infty(3), 0, - l_infty(1);  
+      -l_infty(2), l_infty(1), 0];  
 
 % Extract columns of H for later use
 h1 = H(:, 1);
@@ -57,10 +58,12 @@ eq3 = pm.' * omega * pl == 0;
 % Fourth constraint: h1' * omega * h1 = h2' * omega * h2
 eq4 = h1.' * omega * h1 == h2.' * omega * h2;
 
+% Fifth constraint 
+eq5 = h1.' * omega * h2 == 0;
 
 %% Solve the system
 % Add these constraints to the equation list
-eqn = [eq1, eq2, eq3, eq4];
+eqn = [eq1, eq2, eq3, eq4, eq5];
 
 % Cast equations into matrix form for solving
 [A, y] = equationsToMatrix(eqn, [a, b, c, d]);
@@ -69,15 +72,11 @@ eqn = [eq1, eq2, eq3, eq4];
 X = double(A);
 Y = double(y);
 
-% Fit a linear model without intercept to solve for coefficients
-lm = fitlm(X, Y, 'y ~ x1 + x2 + x3 + x4 - 1');
 
-% Get the coefficients (solution for a, b, c, d)
-W = lm.Coefficients.Estimate;
 
+W= X\Y;
 % Construct the Image of Absolute Conic (IAC) matrix
 IAC = double([W(1, 1), 0, W(2, 1);  0, 1, W(3, 1);  W(2, 1), W(3, 1), W(4, 1)]);
-
 
 %% Compute the calibration matrix
 % Extract intrinsic parameters from IAC

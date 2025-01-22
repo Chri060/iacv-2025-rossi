@@ -16,14 +16,10 @@ img = imread('images\scene.jpg');
 S_points = load('variables\S.mat');
 points = S_points.points;
 rectification = load('variables\rectification.mat');
-H_met = rectification.H_met;
-H_aff = rectification.H_aff;
+H = rectification.H;
 
 
 %% Perform a metric rectification on the image and S points
-% Combine the homographies for metric rectification (H_met) and affine transformation (H_aff)
-H = H_met * H_aff;
-
 % Apply the homography to the image to perform metric rectification
 tform = projective2d(H');
 
