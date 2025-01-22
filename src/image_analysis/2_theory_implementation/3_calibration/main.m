@@ -16,7 +16,7 @@ pl = vanishing.pl';
 pm = vanishing.pm';
 l_infty = vanishing.l_infty;
 rectification = load('variables\rectification.mat');
-H = rectification.H;
+H = inv(rectification.H);
 
 
 %% Normalize all variables
@@ -25,7 +25,6 @@ pl = pl ./ pl(3);
 ph = ph ./ ph(3);
 pm = pm ./ pm(3);
 l_infty = l_infty ./ l_infty(3);
-
 
 
 %% Define the system
@@ -53,7 +52,7 @@ eq1 = lx(1,:) * omega * ph == 0;
 eq2 = lx(2,:) * omega * ph == 0;
 
 % Third constraint: pm' * omega * pl = 0
-eq3 = pm.' * omega * pl == 0;
+ eq3 = pm.' * omega * pl == 0;
 
 % Fourth constraint: h1' * omega * h1 = h2' * omega * h2
 eq4 = h1.' * omega * h1 == h2.' * omega * h2;
@@ -72,11 +71,11 @@ eqn = [eq1, eq2, eq3, eq4, eq5];
 X = double(A);
 Y = double(y);
 
+W = X \ Y;
 
-
-W= X\Y;
 % Construct the Image of Absolute Conic (IAC) matrix
 IAC = double([W(1, 1), 0, W(2, 1);  0, 1, W(3, 1);  W(2, 1), W(3, 1), W(4, 1)]);
+
 
 %% Compute the calibration matrix
 % Extract intrinsic parameters from IAC
