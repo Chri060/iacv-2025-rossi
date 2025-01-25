@@ -52,5 +52,5 @@ S_fac = conic_extractor(adjusted_points);
 
 
 %% Plotting the images
-% conic_plotter(img_met, S_met, [2655,1374], "S", 1)
+conic_plotter(img_met, S_met, [2655,1374], "S", 1)
 conic_plotter(img_fac, S_fac, [3233,1627], "S", 1)

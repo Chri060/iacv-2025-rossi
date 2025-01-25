@@ -82,8 +82,14 @@ for k = 1 : size(points, 2)
     disp("The set of coordinate for point " + k + " in metric rectification is: ")
     disp(points_metric(:, k));
 end 
-
+adjusted_points = adjusted_points';
+for k = 1 : size(points, 2)
+    disp("The set of coordinate for point " + k + " in vertical reconstruction is: ")
+    disp(adjusted_points(:, k));
+end 
 
 %% Saving the variables
 points = points';
-save('variables\S.mat', 'points');
+points_metric = points_metric';
+adjusted_points = adjusted_points';
+save('variables\S.mat', 'points', 'points_metric', 'adjusted_points');
