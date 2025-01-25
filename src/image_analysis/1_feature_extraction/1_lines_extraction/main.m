@@ -15,8 +15,8 @@ img = imread('images\scene.jpg');
 
 %% Edges detection
 % Preprocess the image
-grayImage = rgb2gray(img);                 % Convert to grayscale
-smoothedImage = imgaussfilt(grayImage, 1); % Denoise with Gaussian
+grayImage = rgb2gray(img);                 
+smoothedImage = imgaussfilt(grayImage, 1);
 
 % Apply Canny edge detection
 edges = edge(smoothedImage, 'Canny');
@@ -32,14 +32,17 @@ y2 = 785;    % y-coordinate of the bottom-right corner
 % Define the ROI using the coordinates
 roi = [x1, y1, x2 - x1, y2 - y1]; 
 
-% Detect the usefule features using Harris algorithm
+% Detect features using the Harris algorithm
 points_harris = detectHarrisFeatures(edges, 'MinQuality', 0.001, 'FilterSize', 3, 'ROI',roi); 
 
 
 %% Extract useful points for the analysis
+% Extract the x and y coordinates of the detected points
 points = [points_harris.Location(:, 1), points_harris.Location(:, 2)];
+
+% Plot the image with the detected points
 image_plotter(img, points, [], 0); 
-% 4 7 3 8
+
 % Select the useful points
 points = [  
     ceil(points_harris.Location(340, 1)) - 1, ceil(points_harris.Location(340, 2)) - 1, 1; 

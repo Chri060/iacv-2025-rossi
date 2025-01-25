@@ -30,7 +30,7 @@ function [] = image_plotter(img, points, lines, points_label)
     figure();
     imshow(img);
     hold on;
-    impixelinfo; % Enable pixel information on hover
+    impixelinfo; 
     
     % Plot all lines
     for k = 1:size(lines, 1)
@@ -46,7 +46,6 @@ function [] = image_plotter(img, points, lines, points_label)
             text(points(k, 1), points(k, 2), num2str(k), 'Color', 'black', 'FontSize', 20);
         end 
     end
-
-    % Finalize the visualization
+    
     hold off;
 end

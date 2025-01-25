@@ -51,7 +51,7 @@ function [] = conic_plotter(image, conic_matrix, point, label, conic_num)
         conic_values = reshape(conic_values, [rows, cols]);
         
         % Plot the conic as a contour where the conic equation holds
-        contour(X, Y, conic_values, [0, 0], 'r', 'LineWidth', 2);  % 'r' is red color
+        contour(X, Y, conic_values, [0, 0], 'r', 'LineWidth', 2); 
     
         % Add the label to the curve
         text(point(k, 1), point(k, 2) - 20, label(k), 'Color', 'black', 'FontSize', 20, 'FontWeight', 'bold');

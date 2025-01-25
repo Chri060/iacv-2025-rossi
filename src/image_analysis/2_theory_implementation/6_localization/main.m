@@ -86,13 +86,13 @@ R = [r1, r2, r3];
 R = U * V';
 
 % Rotation matrix definition (final orthogonalized rotation)
-cameraRotation = R.';
+cameraRotation = R';
 
 % Compute the camera translation vector T (position of the camera in world frame)
 T = (K \ (lambda * h3));
 
 % Convert translation to the world frame using the rotation matrix
-cameraPosition = - R.' * T;
+cameraPosition = - R' * T;
 
 
 %% Plotting the object
@@ -113,7 +113,7 @@ object_plotter(object_vertices, 1, cameraRotation, cameraPosition)
 
 
 %% Printing the results
-disp("The position of the camera is: [x = " + cameraPosition(1) + ", y = " + cameraPosition(2) + ", w = " + cameraPosition(3) + "]")
+disp("The position of the camera is: [x = " + cameraPosition(1) + ", y = " + cameraPosition(2) + ", z = " + cameraPosition(3) + "]")
 disp("The rotation of the camera is: "); 
 disp(cameraRotation);
 

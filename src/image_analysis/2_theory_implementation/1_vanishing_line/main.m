@@ -48,6 +48,7 @@ ph = lines_intersection(h1, h4);
 % We can find the parameters of the line at the infinity by simply finding 
 % the line that pass through the vanishing points
 l_infty = points_to_line(pl, pm);
+l_infty = l_infty ./ l_infty(3);
 
 
 %% Plotting the image

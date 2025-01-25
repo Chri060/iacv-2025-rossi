@@ -50,6 +50,7 @@ image_plotter(img, S_points, [], 1);
 % Estimate the conic matrix
 S = conic_extractor(S_points);
 
+
 %% Plotting the conics
 conics = [C;  S];
 label_points = [curves_points(2, 1:2); curves_points(8, 1:2)];
