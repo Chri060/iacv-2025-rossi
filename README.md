@@ -1,6 +1,6 @@
 ## Scene 
 A piece of forniture is a rectangular parallelepiped, whose width (along the X-axis) is $\mathbf{l}=1$.
-The other dimensions, namely the depth $mathbf{m}$ along the $y$-axis and the height $mathbf{h}$ along the $Z$-axis are unknown. 
+The other dimensions, namely the depth $\mathbf{m}$ along the $y$-axis and the height $\mathbf{h}$ along the $Z$-axis are unknown. 
 In addition, a horizontal circumference (i.e., parallel to the $xy$ plane) is visible. 
 Furthermore, an unknown horizontal planar curve is also visible, placed at midheight $\dfrac{\mathbf{h}}{2}$.
 
