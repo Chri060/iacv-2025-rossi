@@ -19,13 +19,7 @@ This project explores camera calibration and 3D reconstruction from a single unc
 
 - Determine the position of the camera with respect to the scene.
 
-## Screenshots
-
 The outcome is a 3D reconstruction of the furniture, complete with real-world dimensions, a rectified version of the curve, and an estimate of the camera pose relative to the scene.
-
-<div align="center">
-![Scene](https://github.com/Chri060/iacv-2025-rossi/blob/main/src/images/xy.jpg)
-</div>
 
 ## Usage
 
