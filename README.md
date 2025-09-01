@@ -2,7 +2,6 @@
 # Single Image Object Reconstruction
 
 <div align="center">
-    <img src="https://img.shields.io/badge/Version-1.0-4CAF50?style=for-the-badge" alt="Project version">
     <img src="https://img.shields.io/badge/Matlab-3776AB?logo=matlab&logoColor=white&style=for-the-badge" alt="Matlab"> 
 </div>
 
